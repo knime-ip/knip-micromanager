@@ -1,1 +1,0 @@
-{"class":"org.knime.knip.mm.loops.MMDoSomethingPlugin","values":{"description":"Very simple example","headless":true,"menu":[{"label":"DeveloperPlugins"},{"label":"My MM Control Unit"}],"type":"org.scijava.command.Command"}}

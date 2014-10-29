@@ -3,11 +3,6 @@
 
 <plugin>
 	<extension point="org.knime.workbench.repository.nodes">
-    <node
-          expert-flag="false"
-          factory-class="org.knime.knip.mm.loops.MMLoopEndNodeFactory"
-          id="org.knime.knip.mm.loops.MMLoopEndNodeFactory">
-    </node>
 	</extension>
 	<extension point="org.knime.workbench.repository.categories">
 	</extension>
