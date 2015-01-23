@@ -171,6 +171,154 @@ public class CMMCoreWrapper {
 		return invoke(core, "getNumberOfComponents");
 	}
 
+	public void setProperty(final String label, final String propName, final int propValue) {
+		invoke(core, "setProperty", label, propName, propValue);
+	}
+
+	public void setProperty(final String label, final String propName, final boolean propValue) {
+		invoke(core, "setProperty", label, propName, propValue);
+	}
+
+	public void setProperty(final String label, final String propName, final String propValue) {
+		invoke(core, "setProperty", label, propName, propValue);
+	}
+
+	public void setProperty(final String label, final String propName, final float propValue) {
+		invoke(core, "setProperty", label, propName, propValue);
+	}
+
+	public void setProperty(final String label, final String propName, final double propValue) {
+		invoke(core, "setProperty", label, propName, propValue);
+	}
+
+	public String getProperty(final String label, final String propName) {
+		return invoke(core, "getProperty", label, propName);
+	}
+
+	public void setExposure(final String label, final double dExp) {
+		invoke(core, "setExposure", label, dExp);
+	}
+
+	public void setExposure(final double exp) {
+		invoke(core, "setExposure", exp);
+	}
+
+	public double getExposure() {
+		return invoke(core, "getExposure");
+	}
+
+	public String getCameraDevice() {
+		return invoke(core, "getCameraDevice");
+	}
+
+	public String getShutterDevice() {
+		return invoke(core, "getShutterDevice");
+	}
+
+	public String getFocusDevice() {
+		return invoke(core, "getFocusDevice");
+	}
+
+	public String getXYStageDevice() {
+		return invoke(core, "getXYStageDevice");
+	}
+
+	public String getAutoFocusDevice() {
+		return invoke(core, "getAutoFocusDevice");
+	}
+
+	public String getImageProcessorDevice() {
+		return invoke(core, "getImageProcessorDevice");
+	}
+
+	public String getSLMDevice() {
+		return invoke(core, "getSLMDevice");
+	}
+
+	public String getGalvoDevice() {
+		return invoke(core, "getGalvoDevice");
+	}
+
+	public int getRemainingImageCount() {
+		return invoke(core, "getRemainingImageCount");
+	}
+
+	public int getBufferTotalCapacity() {
+		return invoke(core, "getBufferTotalCapacity");
+	}
+
+	public int getBufferFreeCapacity() {
+		return invoke(core, "getBufferFreeCapacity");
+	}
+
+	public boolean isBufferOverflowed() {
+		return invoke(core, "isBufferOverflowed");
+	}
+
+	public Object popNextImage() {
+		return invoke(core, "popNextImage");
+	}
+
+	public void setROI(final int x, final int y, final int xSize, final int ySize) {
+		invoke(core, "setROI", x, y, xSize, ySize);
+	}
+
+	public void startSequenceAcquisition(final String cameraLabel, final int numImages, final double intervalMs, final boolean stopOnOverflow) {
+		invoke(core, "startSequenceAcquisition", cameraLabel, numImages, intervalMs, stopOnOverflow);
+	}
+
+	public void startSequenceAcquisition(final int numImages, final double intervalMs, final boolean stopOnOverflow) {
+		invoke(core, "startSequenceAcquisition", numImages, intervalMs, stopOnOverflow);
+	}
+
+	public void prepareSequenceAcquisition(final String cameraLabel) {
+		invoke(core, "prepareSequenceAcquisition", cameraLabel);
+	}
+
+	public void startContinuousSequenceAcquisition(final double intervalMs) {
+		invoke(core, "startContinuousSequenceAcquisition", intervalMs);
+	}
+
+	public void stopSequenceAcquisition() {
+		invoke(core, "stopSequenceAcquisition");
+	}
+
+	public void stopSequenceAcquisition(final String stopLabel) {
+		invoke(core, "stopSequenceAcquisition", stopLabel);
+	}
+
+	public boolean isSequenceRunning(final String arg0) {
+		return invoke(core, "isSequenceRunning", arg0);
+	}
+
+	public boolean isSequenceRunning() {
+		return invoke(core, "isSequenceRunning");
+	}
+
+	public boolean deviceBusy(final String deviceName) {
+		return invoke(core, "deviceBusy", deviceName);
+	}
+
+	public void waitForDevice(final String deviceName) {
+		invoke(core, "waitForDevice", deviceName);
+	}
+
+	public void waitForConfig(final String group, final String configName) {
+		invoke(core, "waitForConfig", group, configName);
+	}
+
+	public boolean systemBusy() {
+		return invoke(core, "systemBusy");
+	}
+
+	public void waitForSystem() {
+		invoke(core, "waitForSystem");
+	}
+
+	public void waitForImageSynchro() {
+		invoke(core, "waitForImageSynchro");
+	}
+
 	private static File discoverMicroManager() {
 		File directory = new File("C:\\Program Files\\Micro-Manager-1.4");
 		if (directory.isDirectory()) return directory;
