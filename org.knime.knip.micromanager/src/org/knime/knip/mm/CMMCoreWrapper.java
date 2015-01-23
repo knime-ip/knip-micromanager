@@ -135,6 +135,42 @@ public class CMMCoreWrapper {
 		invoke(core, "setShutterOpen", state);
 	}
 
+	public void loadDevice(final String label, final String library, final String adapterName) {
+		invoke(core, "loadDevice", label, library, adapterName);
+	}
+
+	public void snapImage() {
+		invoke(core, "snapImage");
+	}
+
+	public Object getImage() {
+		return invoke(core, "getImage");
+	}
+
+	public Object getImage(final long numChannel) {
+		return invoke(core, "getImage", numChannel);
+	}
+
+	public long getImageWidth() {
+		return invoke(core, "getImageWidth");
+	}
+
+	public long getImageHeight() {
+		return invoke(core, "getImageHeight");
+	}
+
+	public long getBytesPerPixel() {
+		return invoke(core, "getBytesPerPixel");
+	}
+
+	public long getImageBitDepth() {
+		return invoke(core, "getImageBitDepth");
+	}
+
+	public long getNumberOfComponents() {
+		return invoke(core, "getNumberOfComponents");
+	}
+
 	private static File discoverMicroManager() {
 		File directory = new File("C:\\Program Files\\Micro-Manager-1.4");
 		if (directory.isDirectory()) return directory;
@@ -163,6 +199,11 @@ public class CMMCoreWrapper {
 		for (final String name : deviceAdapters) {
 			System.err.println("Adapter: " + name);
 		}
+		wrapper.loadDevice("Camera", "DemoCamera", "DCam");
+		wrapper.initializeAllDevices();
+		wrapper.snapImage();
+		final byte[] pixels = (byte[]) wrapper.getImage();
+		System.err.println("Got " + pixels.length + " pixels (" + wrapper.getImageWidth() + "x" + wrapper.getImageHeight() + ")");
 	}
 
 }
