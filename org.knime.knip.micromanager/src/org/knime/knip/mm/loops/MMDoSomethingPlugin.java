@@ -13,13 +13,12 @@ import net.imglib2.type.numeric.integer.ShortType;
 import net.imglib2.view.IntervalView;
 import net.imglib2.view.Views;
 
+import org.knime.knip.mm.CMMCoreWrapper;
 import org.scijava.ItemIO;
 import org.scijava.command.Command;
 import org.scijava.plugin.Menu;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
-
-import mmcorej.*;
 
 @Plugin(menu = { @Menu(label = "DeveloperPlugins"),
 		@Menu(label = "My MM Control Unit") }, description = "Very simple example", headless = true, type = Command.class)
@@ -55,7 +54,7 @@ public class MMDoSomethingPlugin<T extends RealType<T>> implements Command {
 	@Override
 	public void run() {
 
-		final CMMCore core = MMGateway.getInstance().getMMCore();
+		final CMMCoreWrapper core = MMGateway.getInstance().getMMCore();
 
 		try {
 			core.setExposure(10);
