@@ -17,7 +17,7 @@ import java.util.Arrays;
  * 
  * @author Johannes Schindelin
  */
-public class CMMCoreWrapper {
+public class MMGateway {
 
 	private static final String CMMCORE_CLASS_NAME = "mmcorej.CMMCore";
 	private final ClassLoader loader;
@@ -25,11 +25,28 @@ public class CMMCoreWrapper {
 	private final boolean suggestMissingMethods = true;
 
 	/**
+	 * Get the Micro-Manager singleton
+	 * 
+	 * Micro-Manager cannot be instantiated multiple times (it would try to load
+	 * the native library multiple times). So there can only be one instance.
+	 * 
+	 * @return the instance of the Micro-Manager gateway
+	 */
+	public static MMGateway getInstance() {
+		try {
+			return new MMGateway(discoverMicroManager());
+		}
+		catch (final IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
 	 * Instantiates a CMMCore wrapper.
 	 * 
 	 * @param microManagerDirectory the top-level directory of an existing Micro-Manager installation
 	 */
-	public CMMCoreWrapper(final File microManagerDirectory) throws IOException {
+	public MMGateway(final File microManagerDirectory) throws IOException {
 		final File mmcorej = new File(microManagerDirectory, "plugins/Micro-Manager/MMCoreJ.jar");
 		if (!mmcorej.exists()) {
 			throw new IOException("Could not find Micro-Manager at " + mmcorej);
@@ -333,7 +350,7 @@ public class CMMCoreWrapper {
 
 	public static void main(final String... args) throws IOException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, ClassNotFoundException, InstantiationException {
 		final File microManagerDir = discoverMicroManager();
-		final CMMCoreWrapper wrapper = new CMMCoreWrapper(microManagerDir);
+		final MMGateway wrapper = new MMGateway(microManagerDir);
 
 		boolean orcaTest = false;
 		if (orcaTest) {

@@ -13,7 +13,7 @@ import net.imglib2.type.numeric.integer.ShortType;
 import net.imglib2.view.IntervalView;
 import net.imglib2.view.Views;
 
-import org.knime.knip.mm.CMMCoreWrapper;
+import org.knime.knip.mm.MMGateway;
 import org.scijava.ItemIO;
 import org.scijava.command.Command;
 import org.scijava.plugin.Menu;
@@ -54,7 +54,7 @@ public class MMDoSomethingPlugin<T extends RealType<T>> implements Command {
 	@Override
 	public void run() {
 
-		final CMMCoreWrapper core = MMGateway.getInstance().getMMCore();
+		final MMGateway core = MMGateway.getInstance();
 
 		try {
 			core.setExposure(10);

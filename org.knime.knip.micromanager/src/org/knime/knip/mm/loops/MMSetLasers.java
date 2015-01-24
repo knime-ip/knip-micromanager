@@ -2,7 +2,7 @@ package org.knime.knip.mm.loops;
 
 import net.imglib2.type.numeric.RealType;
 
-import org.knime.knip.mm.CMMCoreWrapper;
+import org.knime.knip.mm.MMGateway;
 import org.scijava.ItemIO;
 import org.scijava.command.Command;
 import org.scijava.plugin.Menu;
@@ -62,7 +62,7 @@ public class MMSetLasers<T extends RealType<T>> implements Command {
 	@Override
 	public void run() {
 
-		final CMMCoreWrapper core = MMGateway.getInstance().getMMCore();
+		final MMGateway core = MMGateway.getInstance();
 
 		try {
 			core.waitForSystem();
