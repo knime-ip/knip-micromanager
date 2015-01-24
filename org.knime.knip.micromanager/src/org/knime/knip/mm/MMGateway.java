@@ -24,6 +24,8 @@ public class MMGateway {
 	private final Object core;
 	private final boolean suggestMissingMethods = true;
 
+	private static MMGateway instance;
+
 	/**
 	 * Get the Micro-Manager singleton
 	 * 
@@ -32,9 +34,25 @@ public class MMGateway {
 	 * 
 	 * @return the instance of the Micro-Manager gateway
 	 */
-	public static MMGateway getInstance() {
+	public synchronized static MMGateway getInstance() {
+		if (instance == null) {
+			throw new RuntimeException("Need to configure Micro-Manager first!");
+		}
+		return instance;
+	}
+
+	/**
+	 * Initialize the Micro-Manager singleton
+	 * 
+	 * @param microManagerDirectory the top-level Micro-Manager directory
+	 * @return the singleton
+	 */
+	public synchronized static MMGateway createInstance(final File microManagerDirectory) {
+		if (instance != null) {
+			throw new RuntimeException("Micro-Manager can only be configured once!");
+		}
 		try {
-			return new MMGateway(discoverMicroManager());
+			return instance = new MMGateway(microManagerDirectory);
 		}
 		catch (final IOException e) {
 			throw new RuntimeException(e);
@@ -42,11 +60,30 @@ public class MMGateway {
 	}
 
 	/**
+	 * Discover the top-level Micro-Manager directory.
+	 * 
+	 * This method looks in the default places to find Micro-Manager.
+	 * 
+	 * @return the top-level directory, or null if no Micro-Manager was found
+	 */
+	public static File discoverMicroManager() {
+		File directory = new File("C:\\Program Files\\Micro-Manager-1.4");
+		if (directory.isDirectory()) return directory;
+		directory = new File("/Applications/Micro-Manager-1.4.app");
+		if (directory.isDirectory()) return directory;
+		directory = new File(System.getProperty("user.home") + "/Micro-Manager-1.4");
+		if (directory.isDirectory()) return directory;
+		directory = new File(System.getProperty("user.home") + "/Desktop/Fiji.app");
+		if (directory.isDirectory()) return directory;
+		return null;
+	}
+
+	/**
 	 * Instantiates a CMMCore wrapper.
 	 * 
 	 * @param microManagerDirectory the top-level directory of an existing Micro-Manager installation
 	 */
-	public MMGateway(final File microManagerDirectory) throws IOException {
+	private MMGateway(final File microManagerDirectory) throws IOException {
 		final File mmcorej = new File(microManagerDirectory, "plugins/Micro-Manager/MMCoreJ.jar");
 		if (!mmcorej.exists()) {
 			throw new IOException("Could not find Micro-Manager at " + mmcorej);
@@ -334,18 +371,6 @@ public class MMGateway {
 
 	public void waitForImageSynchro() {
 		invoke(core, "waitForImageSynchro");
-	}
-
-	private static File discoverMicroManager() {
-		File directory = new File("C:\\Program Files\\Micro-Manager-1.4");
-		if (directory.isDirectory()) return directory;
-		directory = new File("/Applications/Micro-Manager-1.4.app");
-		if (directory.isDirectory()) return directory;
-		directory = new File(System.getProperty("user.home") + "/Micro-Manager-1.4");
-		if (directory.isDirectory()) return directory;
-		directory = new File(System.getProperty("user.home") + "/Desktop/Fiji.app");
-		if (directory.isDirectory()) return directory;
-		throw new RuntimeException("Could not find Micro-Manager!");
 	}
 
 	public static void main(final String... args) throws IOException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, ClassNotFoundException, InstantiationException {
