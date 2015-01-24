@@ -21,6 +21,10 @@ import org.scijava.plugin.Plugin;
 		//iconPath = "laser.png")
 public class MMSnapImage<T extends RealType<T>> implements Command {
 
+	// TODO: replace this with a real port
+	@Parameter(type = ItemIO.INPUT)
+	protected String dummy;
+
 	@Parameter(type = ItemIO.OUTPUT, label = "Image")
 	private ImgPlus<T> outImg;
 
